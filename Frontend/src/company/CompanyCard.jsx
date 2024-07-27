@@ -1,3 +1,4 @@
+// CompanyCard.jsx
 import React from 'react';
 
 const CompanyCard = ({ companyName, description }) => {

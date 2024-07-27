@@ -10,8 +10,8 @@ function App() {
 
   return (
     <>
-      {/* <Dashboard/> */}
-      <LoginSignup/>
+      <Dashboard/>
+      {/* <LoginSignup/> */}
     </>
   )
 }

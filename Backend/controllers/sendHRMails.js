@@ -1,4 +1,4 @@
-﻿import { db2 } from '../config/dbConnection.js';
+﻿import { db3 } from '../config/dbConnection.js';
 import nodemailer from 'nodemailer';
 import path from 'path';
 import { dirname } from 'path';
@@ -26,22 +26,25 @@ const sendMail = async (mailOptions) => {
         await transporter.sendMail(mailOptions);
         console.log('Email sent successfully!');
     } catch (error) {
-        console.log('Error sending email:', error);
+        console.error('Error sending email:', error);
     }
 };
 
-const sendMailsToHR = async (selectedHRIds) => {
+const sendMailsToHR = async (hrId) => {
     try {
-        const query = `SELECT emailId FROM hrInfo WHERE id = ANY($1::int[])`;
-        const res = await db2.query(query, [selectedHRIds]);
-        const emailAddresses = res.rows.map(row => row.emailid);
+        const query = `SELECT companyName, emailId FROM hrInfo WHERE id = $1`;
+        const res = await db3.query(query, [hrId]);
+        if (res.rows.length === 0) {
+            throw new Error('No HR found with the given ID');
+        }
 
+        const hr = res.rows[0];
         const mailOptions = {
             from: {
                 name: 'JOINING THE DOTS FOUNDATION',
                 address: process.env.MAILID,
             },
-            to: `${emailAddresses.join(',')}`,
+            to: hr.emailid,
             // hiring
             subject: `Referral for Outstanding Girl Students from ${ hr.companyname }`,
             text: `Dear ${hr.companyname} HR,We are excited to introduce you to a group of exceptionally talented girl students from our program at Joining the Dots Foundation. They have demonstrated outstanding academic performance and technical skills, making them ideal candidates for your company's upcoming recruitment drives.Attached are their test scores and resumes. We strongly believe that these students have the potential to excel in your organization and make significant contributions.We request you to consider interviewing them for suitable positions in your company.Thank you for your time and consideration.Best regards,Joining the Dots Foundation`,
@@ -54,12 +57,9 @@ const sendMailsToHR = async (selectedHRIds) => {
                 },
             ],
     };
-
     await sendMail(mailOptions);
 } catch (error) {
     console.error('Error fetching email addresses:', error);
-} finally {
-    db2.end();
 }
 };
 

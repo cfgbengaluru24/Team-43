@@ -1,9 +1,24 @@
-import React, {useState} from 'react'
-import CompanyCard from './CompanyCard'
-import companies from './data/Companies.json';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import CompanyCard from './CompanyCard';
 import CompanyDialog from './CompanyDialog';
+
 function BaseCompany() {
-    const [selectedCompany, setSelectedCompany] = useState(null);
+  const [companies, setCompanies] = useState([]);
+  const [selectedCompany, setSelectedCompany] = useState(null);
+
+  useEffect(() => {
+    const fetchCompanies = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/companies');
+        setCompanies(response.data);
+      } catch (error) {
+        console.error('Error fetching companies:', error);
+      }
+    };
+
+    fetchCompanies();
+  }, []);
 
   const handleCardClick = (company) => {
     setSelectedCompany(company);
@@ -20,7 +35,7 @@ function BaseCompany() {
         {companies.map((company, index) => (
           <div key={index} onClick={() => handleCardClick(company)}>
             <CompanyCard
-              companyName={company.companyName}
+              companyName={company.companyname}
               description={company.description}
             />
           </div>
@@ -31,4 +46,4 @@ function BaseCompany() {
   );
 }
 
-export default BaseCompany
+export default BaseCompany;

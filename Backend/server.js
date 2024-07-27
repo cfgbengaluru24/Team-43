@@ -1,22 +1,19 @@
-﻿import express from 'express';
+﻿// server.js
+import express from 'express';
 import { db2 } from './config/dbConnection.js';
-import nodemailer from 'nodemailer';
-import path from 'path';
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
+import { db3 } from './config/dbConnection.js';
 import dotenv from 'dotenv';
-
+import cors from 'cors';
 import { sendMailsToCollege } from './controllers/sendCollegeMails.js';
+import { sendMailsToHR } from './controllers/sendHRMails.js';
 
 dotenv.config();
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const app = express();
 const PORT = 5000;
 
 app.use(express.json());
-import cors from 'cors';
+
 const corsOptions = {
   origin: "*",
 };
@@ -33,16 +30,42 @@ app.get('/api/colleges', async (req, res) => {
   }
 });
 
+app.get('/api/companies', async (req, res) => {
+  try {
+    const result = await db3.query("SELECT * FROM hrInfo");
+    res.setHeader('Content-Type', 'application/json');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error fetching HRs:', error);
+    res.status(500).json({ message: 'Error fetching HRs', error: error.toString() });
+  }
+});
+
 app.post('/api/sendEmails', async (req, res) => {
   const { selectedColleges } = req.body;
   if (!selectedColleges || !Array.isArray(selectedColleges)) {
     return res.status(400).json({ message: 'Invalid data' });
   }
   try {
-    await sendMailsToCollege(selectedColleges);//call this from sendCollegeMails.js
+    await sendMailsToCollege(selectedColleges);
     res.status(200).json({ message: 'Emails sent successfully' });
   } catch (error) {
+    console.error('Error sending emails:', error);
     res.status(500).json({ message: 'Error sending emails', error: error.toString() });
+  }
+});
+
+app.post('/api/sendHREmails', async (req, res) => {
+  const { hrId } = req.body;
+  if (!hrId) {
+    return res.status(400).json({ message: 'Invalid data' });
+  }
+  try {
+    await sendMailsToHR(hrId);
+    res.status(200).json({ message: 'Emails sent successfully' });
+  } catch (error) {
+    console.error('Error sending HR emails:', error);
+    res.status(500).json({ message: 'Error sending HR emails', error: error.toString() });
   }
 });
 
