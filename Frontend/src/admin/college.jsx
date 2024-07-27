@@ -1,62 +1,19 @@
 import React, { useState } from 'react';
 import { FaChevronDown, FaChevronUp, FaEnvelope } from 'react-icons/fa';
+import axios from 'axios';
+const colleges = [
+    { id: 1, name: 'TIET', city: 'Patiala', state: 'Punjab', email: 'apathak1_be22@thapar.edu', details: 'Some details', programs: ['Engineering'], studentCount: 1000 },
+    { id: 2, name: 'NIT', city: 'Delhi', state: 'Delhi', email: 'aryan.chharia@gmail.com', details: 'Some details', programs: ['Engineering'], studentCount: 2000 },
+    { id: 3, name: 'IIT', city: 'Delhi', state: 'Delhi', email: 'pahwapranshul@gmail.com', details: 'Some details', programs: ['Engineering'], studentCount: 3000 },
+    { id: 4, name: 'IGDTU', city: 'Delhi', state: 'Delhi', email: 'manvardhansingh05@gmail.com', details: 'Some details', programs: ['Engineering'], studentCount: 4000 },
+    { id: 5, name: 'VIT', city: 'Vellore', state: 'Tamil Nadu', email: 'samikshadeb295@gmail.com', details: 'Some details', programs: ['Engineering'], studentCount: 5000 },
+  ];
+
 
 const College = () => {
   const [expandedCollege, setExpandedCollege] = useState(null);
   const [selectedColleges, setSelectedColleges] = useState([]);
 
-  const colleges = [
-    {
-      id: 1,
-      name: 'Indian Institute of Technology Delhi',
-      city: 'New Delhi',
-      state: 'Delhi',
-      email: 'info@iitd.ac.in',
-      details: 'Premier engineering institute known for cutting-edge research and innovation.',
-      programs: ['Engineering', 'Technology', 'Design'],
-      studentCount: 8000,
-    },
-    {
-      id: 2,
-      name: 'All India Institute of Medical Sciences',
-      city: 'New Delhi',
-      state: 'Delhi',
-      email: 'admin@aiims.edu',
-      details: 'Top medical institute offering excellent healthcare education and research opportunities.',
-      programs: ['Medicine', 'Nursing', 'Public Health'],
-      studentCount: 2500,
-    },
-    {
-      id: 3,
-      name: 'Jawaharlal Nehru University',
-      city: 'New Delhi',
-      state: 'Delhi',
-      email: 'admission@jnu.ac.in',
-      details: 'Renowned for social sciences and international relations studies.',
-      programs: ['Social Sciences', 'International Studies', 'Languages'],
-      studentCount: 8500,
-    },
-    {
-      id: 4,
-      name: 'University of Delhi',
-      city: 'Delhi',
-      state: 'Delhi',
-      email: 'info@du.ac.in',
-      details: 'One of the largest universities offering a wide range of courses.',
-      programs: ['Arts', 'Commerce', 'Sciences'],
-      studentCount: 132000,
-    },
-    {
-      id: 5,
-      name: 'Indian Statistical Institute',
-      city: 'Kolkata',
-      state: 'West Bengal',
-      email: 'dean@isical.ac.in',
-      details: 'Specialized institute focusing on statistics and data science.',
-      programs: ['Statistics', 'Mathematics', 'Computer Science'],
-      studentCount: 1500,
-    },
-  ];
 
   const toggleCollege = (id) => {
     setExpandedCollege(expandedCollege === id ? null : id);
@@ -70,18 +27,20 @@ const College = () => {
     );
   };
 
-  const sendEmail = () => {
-    const selectedEmails = colleges
-      .filter(college => selectedColleges.includes(college.id))
-      .map(college => college.email);
-
-    // In a real application, you would send this to your backend
-    console.log('Sending email to:', selectedEmails);
-
-    // Reset selections and email content after sending
-    setSelectedColleges([]);
-    alert('Email sent successfully!');
-  };
+  const sendEmail = async () => {
+    try {
+      await axios.post('/sendEmails', {
+        selectedColleges,
+        emailContent,
+      });
+      alert('Email sent successfully!');
+      setSelectedColleges([]);
+      setEmailContent('');
+    } catch (error) {
+      console.error('Error sending email:', error);
+      alert('Error sending email');
+    }
+};
 
   return (
     <div className="min-h-screen bg-purple-100 py-12 px-4 sm:px-6 lg:px-8">
