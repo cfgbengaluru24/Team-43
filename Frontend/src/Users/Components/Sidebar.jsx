@@ -10,6 +10,10 @@ const Sidebar = () => {
         <li><NavLink to="/live-classroom" className="block py-2">Live Classroom</NavLink></li>
         <li><NavLink to="/all-classes" className="block py-2">All Classes</NavLink></li>
         <li><NavLink to="/attendance" className="block py-2">Attendance Tracker</NavLink></li>
+        <li><NavLink to="/calendar" className="block py-2">Calendar</NavLink></li>
+        <li><NavLink to="/todo" className="block py-2">To-do</NavLink></li>
+        
+        
       </ul>
     </aside>
   );

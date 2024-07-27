@@ -5,7 +5,7 @@ import Testimonials from './Testimonials';
 const Dashboard = () => {
   return (
     <div className="flex flex-col gap-4">
-      <Calendar /><h1>HELLO</h1>
+      <Calendar />
       <Testimonials />
     </div>
   );

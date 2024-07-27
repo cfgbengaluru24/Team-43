@@ -5,9 +5,11 @@ import Footer from './Users/Components/Footer';
 import Sidebar from './Users/Components/Sidebar';
 import Dashboard from './Dashboard';
 import Profile from './Users/Pages/Profile';
-import Calendar from './Calendar';
+import CustomCalendar from './Calendar';
 import Testimonials from './Testimonials';
 import ThemeButton from './ThemeButton';
+import ToDoList from './ToDoList';
+
 import './index.css';
 
 function App() {
@@ -33,6 +35,9 @@ function App() {
               <Route path="/live-classroom" element={<div>Live Classroom Page</div>} />
               <Route path="/all-classes" element={<div>All Classes Page</div>} />
               <Route path="/attendance" element={<div>Attendance Tracker Page</div>} />
+              <Route path="/calendar" element={<CustomCalendar />} />
+              <Route path="/todo" element={<ToDoList />} />
+              
             </Routes>
           </main>
         </div>

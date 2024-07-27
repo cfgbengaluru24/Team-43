@@ -1,14 +1,28 @@
-import React from 'react';
+// frontend/src/Calendar.jsx
 
-const Calendar = () => {
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import 'react-calendar/dist/Calendar.css';
+
+const CustomCalendar = () => {
+  const [date, setDate] = useState(new Date());
+
+  const handleDateChange = (newDate) => {
+    setDate(newDate);
+  };
+
   return (
-    <div className="flex-1 p-4">
-      <h2 className="text-2xl mb-4">Calendar</h2>
-      <div className="bg-white dark:bg-gray-700 p-4 rounded shadow">
-        <p>Calendar content here</p>
+    <div>
+      <Calendar
+        onChange={handleDateChange}
+        value={date}
+      />
+      <div className="agenda mt-4">
+        <h2>Agenda for {date.toDateString()}</h2>
+        <p>This is where the agenda will be displayed.</p>
       </div>
     </div>
   );
 };
 
-export default Calendar;
+export default CustomCalendar;
