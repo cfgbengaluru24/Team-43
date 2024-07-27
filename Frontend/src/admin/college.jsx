@@ -6,15 +6,22 @@ const College = () => {
   const [colleges, setColleges] = useState([]);
   const [expandedCollege, setExpandedCollege] = useState(null);
   const [selectedColleges, setSelectedColleges] = useState([]);
+  const [error, setError] = useState(null); // Add error state
 
   useEffect(() => {
     const fetchColleges = async () => {
       try {
         const response = await axios.get('/colleges');
-        console.log('Colleges:', response.data); // Add this line
-        setColleges(response.data);
+        console.log('Colleges:', response.data); // Check the structure of the response
+        if (Array.isArray(response.data)) {
+          setColleges(response.data);
+        } else {
+          console.error('Unexpected response format:', response.data);
+          setError('Unexpected response format');
+        }
       } catch (error) {
         console.error('Error fetching colleges:', error);
+        setError('Error fetching colleges');
       }
     };
 
@@ -42,9 +49,22 @@ const College = () => {
       setSelectedColleges([]);
     } catch (error) {
       console.error('Error sending email:', error);
-      alert('Error sending email:', error.message); // Add this line
+      alert('Error sending email:', error.message);
     }
   };
+
+  if (error) {
+    return <div className="min-h-screen bg-purple-100 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-4xl font-bold text-center text-purple-800 mb-8">
+          Partner Colleges for Student Selection
+        </h1>
+        <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+          <p className="text-center text-red-500">{error}</p>
+        </div>
+      </div>
+    </div>;
+  }
 
   return (
     <div className="min-h-screen bg-purple-100 py-12 px-4 sm:px-6 lg:px-8">
