@@ -4,7 +4,6 @@ import { FaChevronDown, FaChevronUp, FaEnvelope } from 'react-icons/fa';
 const College = () => {
   const [expandedCollege, setExpandedCollege] = useState(null);
   const [selectedColleges, setSelectedColleges] = useState([]);
-  const [emailContent, setEmailContent] = useState('');
 
   const colleges = [
     {
@@ -78,11 +77,9 @@ const College = () => {
 
     // In a real application, you would send this to your backend
     console.log('Sending email to:', selectedEmails);
-    console.log('Email content:', emailContent);
 
     // Reset selections and email content after sending
     setSelectedColleges([]);
-    setEmailContent('');
     alert('Email sent successfully!');
   };
 
@@ -131,17 +128,17 @@ const College = () => {
         </div>
         <div className="bg-white shadow-lg rounded-lg p-6">
           <h2 className="text-2xl font-bold text-purple-800 mb-4">Send Email to Selected Colleges</h2>
-          <textarea
+          {/* <textarea
             className="w-full p-2 border border-purple-300 rounded mb-4"
             rows="4"
             value={emailContent}
             onChange={(e) => setEmailContent(e.target.value)}
             placeholder="Enter your email content here..."
-          ></textarea>
+          ></textarea> */}
           <button
             className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 flex items-center"
             onClick={sendEmail}
-            disabled={selectedColleges.length === 0 || !emailContent}
+            disabled={selectedColleges.length === 0}
           >
             <FaEnvelope className="mr-2" />
             Send Email to {selectedColleges.length} Colleges
