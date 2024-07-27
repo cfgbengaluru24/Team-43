@@ -31,9 +31,9 @@ const sendMail = async (mailOptions) => {
     }
 };
 
-const sendMailsToCollege = async (selectedCollegeIds, emailContent) => {
+const sendMailsToCollege = async (selectedCollegeIds) => {
     try {
-        const query = `SELECT emailId FROM collegeData WHERE id = ANY($1::int[])`;
+        const query = `SELECT emailid FROM collegeData WHERE id = ANY($1::int[])`;
         const res = await db2.query(query, [selectedCollegeIds]);
         const emailAddresses = res.rows.map(row => row.emailid);
 
@@ -44,8 +44,8 @@ const sendMailsToCollege = async (selectedCollegeIds, emailContent) => {
             },
             to: emailAddresses.join(','),
             subject: 'Invitation for Participation in Empowerment Test',
-            text: emailContent,
-            html: emailContent,
+            text: 'Dear Sir/Madam,\n\nWe are pleased to invite your institution to participate in our upcoming empowerment test.\n\nBest regards,\nJoining the Dots Foundation',
+            html: '<p>Dear Sir/Madam,</p><p>We are pleased to invite your institution to participate in our upcoming empowerment test.</p><p>Best regards,<br>Joining the Dots Foundation</p>',
             attachments: [
                 {
                     filename: 'joiningDots.pdf',

@@ -1,20 +1,25 @@
 // College.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaChevronDown, FaChevronUp, FaEnvelope } from 'react-icons/fa';
 import axios from 'axios';
 
-const colleges = [
-    { id: 1, name: 'TIET', city: 'Patiala', state: 'Punjab', email: 'apathak1_be22@thapar.edu', studentCount: 1000 },
-    { id: 2, name: 'NIT', city: 'Delhi', state: 'Delhi', email: 'aryan.chharia@gmail.com', studentCount: 2000 },
-    { id: 3, name: 'IIT', city: 'Delhi', state: 'Delhi', email: 'pahwapranshul@gmail.com', studentCount: 3000 },
-    { id: 4, name: 'IGDTU', city: 'Delhi', state: 'Delhi', email: 'manvardhansingh05@gmail.com', studentCount: 4000 },
-    { id: 5, name: 'VIT', city: 'Vellore', state: 'Tamil Nadu', email: 'samikshadeb295@gmail.com', studentCount: 5000 },
-];
-
 const College = () => {
+    const [colleges, setColleges] = useState([]);
     const [expandedCollege, setExpandedCollege] = useState(null);
     const [selectedColleges, setSelectedColleges] = useState([]);
-    const [emailContent, setEmailContent] = useState('');
+
+    useEffect(() => {
+        const fetchColleges = async () => {
+            try {
+                const response = await axios.get('/colleges');
+                setColleges(response.data);
+            } catch (error) {
+                console.error('Error fetching colleges:', error);
+            }
+        };
+
+        fetchColleges();
+    }, []);
 
     const toggleCollege = (id) => {
         setExpandedCollege(expandedCollege === id ? null : id);
@@ -32,11 +37,9 @@ const College = () => {
         try {
             await axios.post('/sendEmails', {
                 selectedColleges,
-                emailContent,
             });
             alert('Email sent successfully!');
             setSelectedColleges([]);
-            setEmailContent('');
         } catch (error) {
             console.error('Error sending email:', error);
             alert('Error sending email');
@@ -85,14 +88,6 @@ const College = () => {
                     </ul>
                 </div>
                 <div className="bg-white shadow-lg rounded-lg p-6">
-                    <h2 className="text-2xl font-bold text-purple-800 mb-4">Send Email to Selected Colleges</h2>
-                    <textarea
-                        className="w-full p-2 border border-purple-300 rounded mb-4"
-                        rows="4"
-                        value={emailContent}
-                        onChange={(e) => setEmailContent(e.target.value)}
-                        placeholder="Enter your email content here..."
-                    ></textarea>
                     <button
                         className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 flex items-center"
                         onClick={sendEmail}
