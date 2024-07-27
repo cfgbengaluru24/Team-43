@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FaBars, FaTimes, FaUniversity, FaUsers, FaClipboardList, FaCog } from 'react-icons/fa';
 import College from './college';
-
+import BaseCompany from '../company/BaseCompany';
 const Dashboard = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [activePage, setActivePage] = useState('college');
@@ -10,7 +10,7 @@ const Dashboard = () => {
 
     const sidebarItems = [
         { id: 'college', name: 'Colleges', icon: <FaUniversity /> },
-        { id: 'students', name: 'Students', icon: <FaUsers /> },
+        { id: 'students', name: 'Company', icon: <FaUsers /> },
         { id: 'programs', name: 'Programs', icon: <FaClipboardList /> },
         { id: 'settings', name: 'Settings', icon: <FaCog /> },
     ];
@@ -20,7 +20,7 @@ const Dashboard = () => {
             case 'college':
                 return <College />;
             case 'students':
-                return <div>Students Page</div>;
+                return <BaseCompany/>;
             case 'programs':
                 return <div>Programs Page</div>;
             case 'settings':
