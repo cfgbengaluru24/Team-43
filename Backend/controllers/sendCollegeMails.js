@@ -5,6 +5,19 @@ import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+// CREATE TABLE collegeData(
+// 	id SERIAL PRIMARY KEY,
+// 	collegeName VARCHAR(30),
+// 	city VARCHAR(20),
+// 	state VARCHAR(20),
+// 	studentCount INTEGER,
+// 	emailId VARCHAR(30)
+// );
+// INSERT INTO collegeData VALUES(1,'TIET','Patiala','Punjab',1000,'apathak1_be22@thapar.edu');
+// INSERT INTO collegeData VALUES(2,'NIT','Delhi','Delhi',2000,'aryan.chharia@gmail.com');
+// INSERT INTO collegeData VALUES(3,'IIT','Delhi','Delhi',3000,'pahwapranshul@gmail.com');
+// INSERT INTO collegeData VALUES(4,'IGDTU','Delhi','Delhi',4000,'manvardhansingh05@gmail.com');
+// INSERT INTO collegeData VALUES(5,'VIT','Vellore','Tamil Nadu',5000,'samikshadeb295@gmail.com');
 
 // Create transporter --> copy from https://nodemailer.com/
 const transporter = nodemailer.createTransport({
