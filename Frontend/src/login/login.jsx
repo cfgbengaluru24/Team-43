@@ -3,15 +3,47 @@ import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
 const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true);
+  const [isAdmin, setIsAdmin] = useState(false);
   const [email, setEmail] = useState('');
   const [, setPassword] = useState('');
   const [name, setName] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Here you would typically handle the login or signup logic
-    console.log(isLogin ? 'Logging in...' : 'Signing up...', { email, , name });
-    // Reset form
+    const url = isLogin
+      ? 'http://localhost:6969/api/login'
+      : 'http://localhost:6969/api/register';
+
+    const data = { email,  };
+    if (!isLogin) data.name = name;
+
+    try {
+      const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        if (isAdmin && email === 'ngo@gmail.com' &&  === 'ngo@2024') {
+          alert('Admin logged in successfully');
+        } else {
+          alert('User logged in successfully');
+        }
+        setMessage(result.message);
+        if (!isLogin) setIsLogin(true);
+      } else {
+        setMessage(result.message);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessage('An error occurred. Please try again.');
+    }
+
     setEmail('');
     setPassword('');
     setName('');
@@ -25,8 +57,8 @@ const LoginSignup = () => {
             {isLogin ? 'Sign in to your account' : 'Create a new account'}
           </h2>
         </div>
+        {message && <p className="text-center text-red-500">{message}</p>}
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <input type="hidden" name="remember" value="true" />
           <div className="rounded-md shadow-sm -space-y-px">
             {!isLogin && (
               <div>
@@ -92,6 +124,18 @@ const LoginSignup = () => {
                 />
               </div>
             </div>
+          </div>
+
+          <div className="flex items-center">
+            <input
+              type="checkbox"
+              checked={isAdmin}
+              onChange={() => setIsAdmin(!isAdmin)}
+              className="h-4 w-4 text-purple-600 focus:ring-purple-500 border-gray-300 rounded"
+            />
+            <label htmlFor="admin" className="ml-2 block text-sm text-purple-900">
+              Admin
+            </label>
           </div>
 
           <div>

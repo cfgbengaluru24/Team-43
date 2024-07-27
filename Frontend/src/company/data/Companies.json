@@ -1,0 +1,127 @@
+[
+    {
+        "companyName": "TechCorp",
+        "description": "A leading provider of innovative technology solutions and services.",
+        "email": "contact@techcorp.com"
+    },
+    {
+        "companyName": "HealthPlus",
+        "description": "A healthcare company focused on improving patient outcomes with advanced medical technology.",
+        "email": "support@healthplus.com"
+    },
+    {
+        "companyName": "EduLearn",
+        "description": "An e-learning platform offering a wide range of online courses and certifications.",
+        "email": "info@edulearn.com"
+    },
+    {
+        "companyName": "GreenEnergy",
+        "description": "A renewable energy company specializing in solar and wind power solutions.",
+        "email": "contact@greenenergy.com"
+    },
+    {
+        "companyName": "FinServ",
+        "description": "A financial services firm providing investment and wealth management services.",
+        "email": "support@finserv.com"
+    },
+    {
+        "companyName": "BuildSmart",
+        "description": "A construction company known for its sustainable building practices and innovative designs.",
+        "email": "info@buildsmart.com"
+    },
+    {
+        "companyName": "Foodies",
+        "description": "A food delivery service offering a wide variety of cuisines from local restaurants.",
+        "email": "support@foodies.com"
+    },
+    {
+        "companyName": "TravelWorld",
+        "description": "A travel agency that offers customized vacation packages and travel experiences.",
+        "email": "contact@travelworld.com"
+    },
+    {
+        "companyName": "AutoDrive",
+        "description": "An automotive company specializing in electric and autonomous vehicles.",
+        "email": "info@autodrive.com"
+    },
+    {
+        "companyName": "RetailHub",
+        "description": "A retail company providing a diverse range of products through both online and physical stores.",
+        "email": "support@retailhub.com"
+    },
+    {
+        "companyName": "FashionLine",
+        "description": "A fashion brand known for its trendy and affordable clothing and accessories.",
+        "email": "info@fashionline.com"
+    },
+    {
+        "companyName": "HomeComfort",
+        "description": "A home appliances company offering high-quality and innovative products for modern living.",
+        "email": "contact@homecomfort.com"
+    },
+    {
+        "companyName": "MediaWorks",
+        "description": "A media and entertainment company producing a wide range of content for various platforms.",
+        "email": "info@mediaworks.com"
+    },
+    {
+        "companyName": "BioTech",
+        "description": "A biotechnology company focused on developing cutting-edge medical treatments and solutions.",
+        "email": "support@biotech.com"
+    },
+    {
+        "companyName": "LogiTrans",
+        "description": "A logistics and transportation company providing efficient and reliable supply chain solutions.",
+        "email": "info@logitrans.com"
+    },
+    {
+        "companyName": "AgriGrow",
+        "description": "An agricultural company dedicated to sustainable farming practices and innovative crop solutions.",
+        "email": "contact@agrigrow.com"
+    },
+    {
+        "companyName": "CyberSecure",
+        "description": "A cybersecurity firm offering advanced protection and risk management solutions.",
+        "email": "support@cybersecure.com"
+    },
+    {
+        "companyName": "UrbanSpace",
+        "description": "A real estate company specializing in urban development and smart city solutions.",
+        "email": "info@urbanspace.com"
+    },
+    {
+        "companyName": "GameOn",
+        "description": "A video game development studio creating immersive and engaging gaming experiences.",
+        "email": "contact@gameon.com"
+    },
+    {
+        "companyName": "CloudNet",
+        "description": "A cloud computing company providing scalable and secure cloud solutions for businesses.",
+        "email": "support@cloudnet.com"
+    },
+    {
+        "companyName": "WellnessLife",
+        "description": "A wellness company offering a range of health and fitness products and services.",
+        "email": "info@wellnesslife.com"
+    },
+    {
+        "companyName": "EcoFriendly",
+        "description": "A company committed to producing eco-friendly and sustainable products for everyday use.",
+        "email": "contact@ecofriendly.com"
+    },
+    {
+        "companyName": "TechConsult",
+        "description": "A consulting firm specializing in technology strategy and digital transformation.",
+        "email": "support@techconsult.com"
+    },
+    {
+        "companyName": "FinTech Solutions",
+        "description": "A fintech company offering innovative financial technology products and services.",
+        "email": "info@fintechsolutions.com"
+    },
+    {
+        "companyName": "CleanWater",
+        "description": "A company dedicated to providing clean and safe water solutions globally.",
+        "email": "contact@cleanwater.com"
+    }
+]
