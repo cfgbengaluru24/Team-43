@@ -1,8 +1,9 @@
 ﻿import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
-import { sendMailsToCollege } from './emailService.js';
+// import { sendMailsToCollege } from './emailService.js';
 import { db2 } from './config/dbConnection.js';
+import { getStudents } from './controllers/testData.js';
 
 dotenv.config();
 
@@ -34,6 +35,14 @@ app.get('/colleges', async (req, res) => {
         res.status(500).send({ message: 'Error fetching colleges', error });
     }
 });
+app.get('/students', async (req, res) => {
+    try {
+      const students = await getStudents();
+      res.json(students);
+    } catch (error) {
+      res.status(500).send('Server Error');
+    }
+  });
 
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
