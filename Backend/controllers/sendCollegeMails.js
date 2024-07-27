@@ -1,25 +1,15 @@
-﻿import { db2 } from '../config/dbConnection.js';
+﻿// emailService.js
+import { db2 } from '../config/dbConnection.js';
 import nodemailer from 'nodemailer';
 import path from 'path';
 import { dirname } from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-// CREATE TABLE collegeData(
-// 	id SERIAL PRIMARY KEY,
-// 	collegeName VARCHAR(30),
-// 	city VARCHAR(20),
-// 	state VARCHAR(20),
-// 	studentCount INTEGER,
-// 	emailId VARCHAR(30)
-// );
-// INSERT INTO collegeData VALUES(1,'TIET','Patiala','Punjab',1000,'apathak1_be22@thapar.edu');
-// INSERT INTO collegeData VALUES(2,'NIT','Delhi','Delhi',2000,'aryan.chharia@gmail.com');
-// INSERT INTO collegeData VALUES(3,'IIT','Delhi','Delhi',3000,'pahwapranshul@gmail.com');
-// INSERT INTO collegeData VALUES(4,'IGDTU','Delhi','Delhi',4000,'manvardhansingh05@gmail.com');
-// INSERT INTO collegeData VALUES(5,'VIT','Vellore','Tamil Nadu',5000,'samikshadeb295@gmail.com');
 
-// Create transporter --> copy from https://nodemailer.com/
 const transporter = nodemailer.createTransport({
     service: "gmail",
     host: "smtp.gmail.com",
@@ -32,70 +22,45 @@ const transporter = nodemailer.createTransport({
     }
 });
 
-const mailOptions = {
-    from: {
-        name: "JOINING THE DOTS FOUNDATION",
-        address: process.env.MAILID,
-    }, // Sender address
-    to: '', // List of receivers, fetch from DB
-    subject: "Invitation for Participation in Empowerment Test",
-    text: `Dear Principal,
-
-We are pleased to invite your esteemed institution to participate in a special initiative by the Joining the Dots Foundation. Our goal is to empower young women by providing them with opportunities to excel in their chosen fields. 
-
-As part of this initiative, we are conducting a test for all girls in your college. This test aims to identify and nurture talent, providing them with the resources and support they need to succeed.
-
-Please find the attached invitation and detailed information about the test.
-
-Best regards,
-Joining the Dots Foundation`,
-    html: `<p>Dear Principal,</p>
-           <p>We are pleased to invite your esteemed institution to participate in a special initiative by the Joining the Dots Foundation. Our goal is to empower young women by providing them with opportunities to excel in their chosen fields.</p>
-           <p>As part of this initiative, we are conducting a test for all girls in your college. This test aims to identify and nurture talent, providing them with the resources and support they need to succeed.</p>
-           <p>Please find the attached invitation and detailed information about the test.</p>
-           <p>Best regards,</p>
-           <p><b>Joining the Dots Foundation</b></p>`,
-    attachments: [
-        {
-            filename: 'joiningDots.pdf',
-            path: path.join(__dirname, 'joiningDots.pdf'), // Using path module
-            contentType: 'application/pdf',
-        },
-    ] // Array of objects
+const sendMail = async (mailOptions) => {
+    try {
+        await transporter.sendMail(mailOptions);
+        console.log('Email sent successfully!');
+    } catch (error) {
+        console.log('Error sending email:', error);
+    }
 };
 
 const sendMailsToCollege = async (selectedCollegeIds, emailContent) => {
     try {
-      const query = `SELECT emailId FROM collegeData WHERE id = ANY($1::int[])`;
-      const res = await db2.query(query, [selectedCollegeIds]);
-      const emailAddresses = res.rows.map(row => row.emailid);
-  
-      const mailOptions = {
-        from: {
-          name: 'JOINING THE DOTS FOUNDATION',
-          address: process.env.MAILID,
-        },
-        to: emailAddresses.join(','),
-        subject: 'Invitation for Participation in Empowerment Test',
-        text: emailContent,
-        html: emailContent,
-        attachments: [
-          {
-            filename: 'joiningDots.pdf',
-            path: path.join(__dirname, 'joiningDots.pdf'),
-            contentType: 'application/pdf',
-          },
-        ],
-      };
-  
-      await sendMail(mailOptions);
-    } catch (error) {
-      console.error('Error fetching email addresses:', error);
-    } finally {
-      db2.end(); // Close the database connection
-    }
-  };
-  
-  export { sendMailsToCollege };
+        const query = `SELECT emailId FROM collegeData WHERE id = ANY($1::int[])`;
+        const res = await db2.query(query, [selectedCollegeIds]);
+        const emailAddresses = res.rows.map(row => row.emailid);
 
-// when they login--> attendence marked
+        const mailOptions = {
+            from: {
+                name: 'JOINING THE DOTS FOUNDATION',
+                address: process.env.MAILID,
+            },
+            to: emailAddresses.join(','),
+            subject: 'Invitation for Participation in Empowerment Test',
+            text: emailContent,
+            html: emailContent,
+            attachments: [
+                {
+                    filename: 'joiningDots.pdf',
+                    path: path.join(__dirname, 'joiningDots.pdf'),
+                    contentType: 'application/pdf',
+                },
+            ],
+        };
+
+        await sendMail(mailOptions);
+    } catch (error) {
+        console.error('Error fetching email addresses:', error);
+    } finally {
+        db2.end(); // Close the database connection
+    }
+};
+
+export { sendMailsToCollege };
