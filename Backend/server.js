@@ -1,5 +1,4 @@
-﻿// server.js
-import express from 'express';
+﻿import express from 'express';
 import bodyParser from 'body-parser';
 import dotenv from 'dotenv';
 import { sendMailsToCollege } from './emailService.js';
@@ -14,10 +13,12 @@ app.use(bodyParser.json());
 
 app.post('/sendEmails', async (req, res) => {
     const { selectedColleges } = req.body;
+    console.log('Selected Colleges:', selectedColleges); // Add this line
     try {
         await sendMailsToCollege(selectedColleges);
         res.status(200).send({ message: 'Emails sent successfully' });
     } catch (error) {
+        console.error('Error sending emails:', error); // Add this line
         res.status(500).send({ message: 'Error sending emails', error });
     }
 });
@@ -26,8 +27,10 @@ app.get('/colleges', async (req, res) => {
     try {
         const query = 'SELECT * FROM collegeData';
         const result = await db2.query(query);
+        console.log('Colleges fetched:', result.rows); // Add this line
         res.status(200).json(result.rows);
     } catch (error) {
+        console.error('Error fetching colleges:', error); // Add this line
         res.status(500).send({ message: 'Error fetching colleges', error });
     }
 });

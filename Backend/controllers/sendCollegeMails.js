@@ -1,5 +1,4 @@
-﻿// emailService.js
-import { db2 } from '../config/dbConnection.js';
+﻿import { db2 } from '../config/dbConnection.js';
 import nodemailer from 'nodemailer';
 import path from 'path';
 import { dirname } from 'path';
@@ -36,6 +35,8 @@ const sendMailsToCollege = async (selectedCollegeIds) => {
         const query = `SELECT emailid FROM collegeData WHERE id = ANY($1::int[])`;
         const res = await db2.query(query, [selectedCollegeIds]);
         const emailAddresses = res.rows.map(row => row.emailid);
+
+        console.log('Email Addresses:', emailAddresses); // Add this line
 
         const mailOptions = {
             from: {
