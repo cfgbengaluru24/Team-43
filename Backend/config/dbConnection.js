@@ -20,6 +20,13 @@ const db2 = new pg.Client({
 });
 db2.connect();   // Start connection to db
 
+export const db2 = {
+  query: (text, params) => pool.query(text, params),
+  end: () => pool.end(),
+};
+
+
+
 // Database connection for `HRData`
 const db3 = new pg.Client({
     user: 'postgres',

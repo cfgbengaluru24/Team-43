@@ -51,30 +51,38 @@ Joining the Dots Foundation`,
     ] // Array of objects
 };
 
-const sendMail = async function (transporter, mailOptions) {
+const sendMailsToCollege = async (selectedCollegeIds, emailContent) => {
     try {
-        await transporter.sendMail(mailOptions);
-        console.log('Email sent successfully!');
+      const query = `SELECT emailId FROM collegeData WHERE id = ANY($1::int[])`;
+      const res = await db2.query(query, [selectedCollegeIds]);
+      const emailAddresses = res.rows.map(row => row.emailid);
+  
+      const mailOptions = {
+        from: {
+          name: 'JOINING THE DOTS FOUNDATION',
+          address: process.env.MAILID,
+        },
+        to: emailAddresses.join(','),
+        subject: 'Invitation for Participation in Empowerment Test',
+        text: emailContent,
+        html: emailContent,
+        attachments: [
+          {
+            filename: 'joiningDots.pdf',
+            path: path.join(__dirname, 'joiningDots.pdf'),
+            contentType: 'application/pdf',
+          },
+        ],
+      };
+  
+      await sendMail(mailOptions);
     } catch (error) {
-        console.log('Error sending email:', error);
-        // Retry mechanism or additional handling can be implemented here
-    }
-};
-
-const sendMailsToCollege = async () => {
-    try {
-        const res = await db2.query('SELECT emailId FROM collegeData');
-        const emailAddresses = res.rows.map(row => row.emailid);
-        mailOptions.to = emailAddresses.join(',');
-
-        await sendMail(transporter, mailOptions);
-    } catch (error) {
-        console.error('Error fetching email addresses:', error);
+      console.error('Error fetching email addresses:', error);
     } finally {
-        db2.end(); // Close the database connection
+      db2.end(); // Close the database connection
     }
-};
-
-export { sendMailsToCollege };   
+  };
+  
+  export { sendMailsToCollege };
 
 // when they login--> attendence marked

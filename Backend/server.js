@@ -12,11 +12,21 @@ const port = 3000;
 app.use(express.static('public'));
 // For body parser
 app.use(bodyParser.urlencoded({ extended: true }));
+// sendMailsToCollege();
+// sendMailsToHR();
+// todoListActivated();
+
+app.post('/sendEmails', async (req, res) => {
+    const { selectedColleges, emailContent } = req.body;
+    try {
+        await sendMailsToCollege(selectedColleges, emailContent);
+        res.status(200).send({ message: 'Emails sent successfully' });
+    } catch (error) {
+        res.status(500).send({ message: 'Error sending emails', error });
+    }
+});
 
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}/`);
     // Trigger email sending on server start
-    // sendMailsToCollege();
-    sendMailsToHR();
-    todoListActivated();
 });
