@@ -1,7 +1,22 @@
-import React from 'react';
-import students from '../dummy.js/student-result';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const StudentResult = () => {
+  const [students, setStudents] = useState([]);
+
+  useEffect(() => {
+    const fetchStudents = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/students'); // Adjust URL as needed
+        setStudents(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchStudents();
+  }, []);
+
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Students Information</h1>

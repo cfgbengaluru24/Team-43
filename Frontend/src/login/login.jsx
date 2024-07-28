@@ -1,6 +1,21 @@
 import React, { useState } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
 
+import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
+
+const App = () => (
+  <Router>
+    <Switch>
+      <Route path="/login" component={LoginSignup} />
+      <Route path="/admin" component={AdminPage} />
+      <Redirect from="/" to="/login" />
+    </Switch>
+  </Router>
+);
+
+export default App;
+
+
 const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -30,7 +45,10 @@ const LoginSignup = () => {
       const result = await response.json();
       if (response.ok) {
         if (isAdmin && email === 'ngo@gmail.com' &&  === 'ngo@2024') {
+          // redirect to admin page
+
           alert('Admin logged in successfully');
+
         } else {
           alert('User logged in successfully');
         }
