@@ -1,21 +1,21 @@
 ﻿// server.js
+// import dotenv from 'dotenv';     !!this part not wrkng
+// dotenv.config();
+console.log(process.env.DATABASE_PASSWORD)
 import express from 'express';
-import { db2 } from './config/dbConnection.js';
-import { db3 } from './config/dbConnection.js';
-import dotenv from 'dotenv';
+import { db2, db3 } from './config/dbConnection.js';
 import cors from 'cors';
 import { sendMailsToCollege } from './controllers/sendCollegeMails.js';
 import { sendMailsToHR } from './controllers/sendHRMails.js';
 
 import cookieParser from "cookie-parser";
 import Auth from "../Backend/routes/auth.route.js"
-app.use(cookieParser());
-app.use('/api', Auth)
-
-dotenv.config();
-
 const app = express();
 const PORT = 5000;
+// app.use('/api', Auth)
+
+
+
 
 app.use(express.json());
 
@@ -23,6 +23,7 @@ const corsOptions = {
   origin: "*",
 };
 app.use(cors(corsOptions));
+app.use(cookieParser());
 
 app.get('/api/colleges', async (req, res) => {
   try {

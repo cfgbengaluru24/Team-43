@@ -1,6 +1,7 @@
 ﻿import bcrypt from "bcrypt";
-import prisma from '../config/dbConnection.js'; // Adjust the path as per your file structure
+// import prisma from '../config/dbConnection.js'; // Adjust the path as per your file structure
 import jwt from "jsonwebtoken";
+
 
 // Admin credentials (load from environment variables)
 const ADMIN_EMAIL = 'ngo@gmail.com';
