@@ -7,6 +7,11 @@ import cors from 'cors';
 import { sendMailsToCollege } from './controllers/sendCollegeMails.js';
 import { sendMailsToHR } from './controllers/sendHRMails.js';
 
+import cookieParser from "cookie-parser";
+import Auth from "../Backend/routes/auth.route.js"
+app.use(cookieParser());
+app.use('/api', Auth)
+
 dotenv.config();
 
 const app = express();
