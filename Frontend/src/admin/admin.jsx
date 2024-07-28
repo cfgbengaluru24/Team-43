@@ -10,7 +10,7 @@ const Dashboard = () => {
 
     const sidebarItems = [
         { id: 'college', name: 'Colleges', icon: <FaUniversity /> },
-        { id: 'students', name: 'Students', icon: <FaUsers /> },
+        { id: 'students', name: 'Company', icon: <FaUsers /> },
         { id: 'programs', name: 'Programs', icon: <FaClipboardList /> },
         { id: 'settings', name: 'Settings', icon: <FaCog /> },
     ];

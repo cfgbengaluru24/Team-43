@@ -18,6 +18,7 @@ function App() {
   return (
     
     <>
+<<<<<<< HEAD
     <BrowserRouter>
     <Navbar/>
     <Routes>
@@ -28,6 +29,10 @@ function App() {
     </Routes>
     <Footer/>
     </BrowserRouter>
+=======
+      <Dashboard/>
+      {/* <LoginSignup/> */}
+>>>>>>> 0f2deab3b821c6e23dd363e68c493b35e4e2380f
     </>
   )
 }

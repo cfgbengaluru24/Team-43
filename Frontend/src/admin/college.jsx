@@ -6,22 +6,32 @@ const College = () => {
   const [colleges, setColleges] = useState([]);
   const [expandedCollege, setExpandedCollege] = useState(null);
   const [selectedColleges, setSelectedColleges] = useState([]);
-  const [error, setError] = useState(null); // Add error state
+  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchColleges = async () => {
       try {
-        const response = await axios.get('/colleges');
-        console.log('Colleges:', response.data); // Check the structure of the response
-        if (Array.isArray(response.data)) {
-          setColleges(response.data);
+        const response = await fetch('http://localhost:5000/api/colleges', {
+          mode: 'cors',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        const data = await response.json();
+
+        if (Array.isArray(data)) {
+          setColleges(data);
         } else {
-          console.error('Unexpected response format:', response.data);
+          console.error('Unexpected response format:', data);
           setError('Unexpected response format');
         }
       } catch (error) {
         console.error('Error fetching colleges:', error);
-        setError('Error fetching colleges');
+        setError(`Error fetching colleges: ${error.message}`);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -42,7 +52,7 @@ const College = () => {
 
   const sendEmail = async () => {
     try {
-      await axios.post('/sendEmails', {
+      await axios.post('http://localhost:5000/api/sendEmails', {
         selectedColleges,
       });
       alert('Email sent successfully!');
@@ -53,17 +63,23 @@ const College = () => {
     }
   };
 
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   if (error) {
-    return <div className="min-h-screen bg-purple-100 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-center text-purple-800 mb-8">
-          Partner Colleges for Student Selection
-        </h1>
-        <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
-          <p className="text-center text-red-500">{error}</p>
+    return (
+      <div className="min-h-screen bg-purple-100 py-12 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <h1 className="text-4xl font-bold text-center text-purple-800 mb-8">
+            Partner Colleges for Student Selection
+          </h1>
+          <div className="bg-white shadow-lg rounded-lg overflow-hidden mb-8">
+            <p className="text-center text-red-500">{error}</p>
+          </div>
         </div>
       </div>
-    </div>;
+    );
   }
 
   return (
@@ -85,9 +101,9 @@ const College = () => {
                   />
                   <div className="flex-grow cursor-pointer" onClick={() => toggleCollege(college.id)}>
                     <div className="flex items-center justify-between">
-                      <div className="text-lg font-medium text-purple-900">{college.name}</div>
+                      <div className="text-lg font-medium text-purple-900">{college.collegename}</div>
                       <div className="flex items-center">
-                        <div className="text-sm text-purple-600 mr-4">{`${college.city}, ${college.state}`}</div>
+                        <div className="text-sm text-purple-600 mr-4">{`${  college.city}, ${college.state}`}</div>
                         {expandedCollege === college.id ? (
                           <FaChevronUp className="text-purple-500" />
                         ) : (
@@ -99,8 +115,8 @@ const College = () => {
                 </div>
                 {expandedCollege === college.id && (
                   <div className="px-6 py-4 bg-purple-50">
-                    <p className="text-purple-700"><strong>Student Count:</strong> {college.studentCount.toLocaleString()}</p>
-                    <p className="text-purple-700"><strong>Email:</strong> {college.email}</p>
+                    <p className="text-purple-700"><strong>Student Count:</strong> {college.studentcount.toLocaleString()}</p>
+                    <p className="text-purple-700"><strong>Email:</strong> {college.emailid}</p>
                   </div>
                 )}
               </li>

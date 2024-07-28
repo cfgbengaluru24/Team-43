@@ -1,6 +1,8 @@
 ﻿import pg from 'pg';
+import dotenv from 'dotenv';
 
-// Database connection for `todo`
+dotenv.config();
+
 const db = new pg.Client({
     user: 'postgres',
     host: 'localhost',
@@ -8,9 +10,8 @@ const db = new pg.Client({
     : process.env.DATABASE_PASSWORD,
     port: 5432
 });
-db.connect();   // Start connection to db
+db.connect(); 
 
-// Database connection for `collegeData`
 const db2 = new pg.Client({
     user: 'postgres',
     host: 'localhost',
@@ -18,9 +19,8 @@ const db2 = new pg.Client({
     : process.env.DATABASE_PASSWORD,
     port: 5432
 });
-db2.connect();   // Start connection to db
+db2.connect(); 
 
-// Database connection for `HRData`
 const db3 = new pg.Client({
     user: 'postgres',
     host: 'localhost',
@@ -28,8 +28,9 @@ const db3 = new pg.Client({
     : process.env.DATABASE_PASSWORD,
     port: 5432
 });
-db3.connect();   // Start connection to db
+db3.connect(); 
 
+<<<<<<< HEAD
 // db.js
 // const { Pool } = require('pg');
 
@@ -45,3 +46,6 @@ db4.connect();
 
 export { db, db2,db3,db4 };
 
+=======
+export { db, db2, db3 };
+>>>>>>> 0f2deab3b821c6e23dd363e68c493b35e4e2380f
