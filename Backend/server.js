@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-﻿import express from 'express';
-import bodyParser from 'body-parser';
-import dotenv from 'dotenv';
-// import { sendMailsToCollege } from './emailService.js';
-import { db2 } from './config/dbConnection.js';
-import { getStudents } from './controllers/testData.js';
-=======
 ﻿// server.js
 import express from 'express';
 import { db2 } from './config/dbConnection.js';
@@ -14,12 +6,11 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import { sendMailsToCollege } from './controllers/sendCollegeMails.js';
 import { sendMailsToHR } from './controllers/sendHRMails.js';
->>>>>>> 0f2deab3b821c6e23dd363e68c493b35e4e2380f
 
 dotenv.config();
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 
 app.use(express.json());
 

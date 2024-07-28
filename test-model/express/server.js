@@ -4,6 +4,7 @@ const { Pool } = require('pg');
 require('dotenv').config();
 const app = express();
 
+
 // Enable CORS for all origins
 app.use(cors({
   origin: 'http://localhost:3000', // Adjust this URL if needed
@@ -14,11 +15,10 @@ app.use(cors({
 app.use(express.json()); // Parse JSON bodies
 
 const pool = new Pool({
-  user: process.env.DB_USER,
-  host: process.env.DB_HOST,
-  database: process.env.DB_DATABASE,
-  : process.env.DB_PASSWORD,
-  port: process.env.DB_PORT,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 });
 
 // Test database connection

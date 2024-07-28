@@ -1,20 +1,7 @@
 import React, { useState } from 'react';
 import { FaUser, FaLock, FaEnvelope } from 'react-icons/fa';
-
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom';
-
-const App = () => (
-  <Router>
-    <Switch>
-      <Route path="/login" component={LoginSignup} />
-      <Route path="/admin" component={AdminPage} />
-      <Redirect from="/" to="/login" />
-    </Switch>
-  </Router>
-);
-
-export default App;
-
+// import { useHistory } from 'react-router-dom';
+// import App from '../App';
 
 const LoginSignup = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -23,6 +10,7 @@ const LoginSignup = () => {
   const [, setPassword] = useState('');
   const [name, setName] = useState('');
   const [message, setMessage] = useState('');
+  // const history = useHistory();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,12 +33,9 @@ const LoginSignup = () => {
       const result = await response.json();
       if (response.ok) {
         if (isAdmin && email === 'ngo@gmail.com' &&  === 'ngo@2024') {
-          // redirect to admin page
-
-          alert('Admin logged in successfully');
-
+            window.location.href = '/admin/home'; // Redirect to admin page
         } else {
-          alert('User logged in successfully');
+             window.location.href = '/dashboard'; // Redirect to home page
         }
         setMessage(result.message);
         if (!isLogin) setIsLogin(true);
@@ -66,7 +51,6 @@ const LoginSignup = () => {
     setPassword('');
     setName('');
   };
-
   return (
     <div className="min-h-screen bg-purple-100 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8 bg-white p-10 rounded-xl shadow-lg">

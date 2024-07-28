@@ -30,22 +30,13 @@ const db3 = new pg.Client({
 });
 db3.connect(); 
 
-<<<<<<< HEAD
 // db.js
 // const { Pool } = require('pg');
 
-const db4 = new pg.Client({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DB_DATABASE,
-    : process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-});
-db4.connect();
+const pool = new pg.Pool({connectionString: process.env.DATABASE_URL, ssl: {rejectUnauthorized: false}});
+pool.connect();
 // module.exports = pool;
 
-export { db, db2,db3,db4 };
+export { db, db2,db3,pool};
 
-=======
-export { db, db2, db3 };
->>>>>>> 0f2deab3b821c6e23dd363e68c493b35e4e2380f
+

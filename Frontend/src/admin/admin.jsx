@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FaBars, FaTimes, FaUniversity, FaUsers, FaClipboardList, FaCog } from 'react-icons/fa';
 import College from './college';
 import BaseCompany from '../company/BaseCompany';
-const Dashboard = () => {
+const Dashboarda = () => {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const [activePage, setActivePage] = useState('college');
 
@@ -72,4 +72,4 @@ const Dashboard = () => {
     );
 };
 
-export default Dashboard;
+export default Dashboarda;

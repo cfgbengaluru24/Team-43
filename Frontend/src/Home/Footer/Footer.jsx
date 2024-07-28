@@ -19,7 +19,9 @@ const Footer = () => {
                 <Link to="/">Home</Link>
                 <Link to="/news">News</Link>
                 <Link to="/about">About</Link>
-                <Link to="/contact">Contact Us</Link>
+                <Link to="/contact">Contact Us : Toll-free: 1800-123-456
+
+</Link>
                 <Link to="/team">Our Team</Link>
             </div>
             <div className="copyright">

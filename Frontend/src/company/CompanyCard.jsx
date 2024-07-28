@@ -1,7 +1,4 @@
-<<<<<<< HEAD
-=======
 // CompanyCard.jsx
->>>>>>> 0f2deab3b821c6e23dd363e68c493b35e4e2380f
 import React from 'react';
 
 const CompanyCard = ({ companyName, description }) => {
